@@ -176,7 +176,7 @@ class Board:
             print(line_top_bot)
             print(ligne_up_and_bottom_case)
             print(line_border)
-            print(ligne_print)
+            print(ligne_print.replace("◇", Color.RED + "◇").replace("❖", Color.GREEN + "❖").replace("■", Color.DEFAULT+ "■").replace("|", Color.DEFAULT + "|"))
             print(line_border)
             print(ligne_up_and_bottom_case)
             num_line -= 1
@@ -186,3 +186,8 @@ class Board:
             ligne_col += f'     {i}    '
         print(ligne_col)
         return None
+    
+class Color:
+    GREEN = '\033[92m'
+    RED = '\033[31m'
+    DEFAULT= '\033[0m' 
