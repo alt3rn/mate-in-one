@@ -37,7 +37,7 @@ class Board:
 
     def initBoardList():
         """
-        Crée le plateau sous forme de liste
+        Crée le plateau VIDE sous forme de liste
         ---
         return: list
         """
@@ -49,6 +49,24 @@ class Board:
                 ligne.append('   ')
             echiquier.append(ligne)
         return echiquier
+    
+
+    def initBoard():
+        """
+        Crée le plateau avec la disposition des pièces de départ, sous forme de liste.
+        ---
+        return: list
+        """
+        board = Board.initBoardList()
+        # J'ai aucune idée de comment optimiser ce truc donc bon, j'ai ff et j'ai fait à l'ancienne
+        # Placement pions blancs
+        for i in range(1, 9):
+            board[1][i-1] = f'❖P{i}'
+            board[6][i-1] = f'◇P{abs(i-9)}'
+        board[0] = ['❖R1', '❖N1', '❖B1', '❖Q', '❖K', '❖B2', '❖N2', '❖R2']
+        board[7] = ['◇R2', '◇N2', '◇B2', '◇Q', '◇K', '◇B1', '◇N1', '◇R1']
+
+        return board
     
 
     def convertIndice(position: str):
@@ -109,7 +127,7 @@ class Board:
         num_line = 8
         nom_col = 'abcdefgh'
         line_top_bot = '  +' + '---------+'*8
-    
+
         for i in range(len(board)-1, -1, -1):
             ligne_print = f'{i+1} |'
             line_border = '  |'
@@ -120,10 +138,17 @@ class Board:
                         if board[i][j] == '   ':
                             ligne_print += '■■■■■■■■■|'
                             line_border += '■■■■■■■■■|'
+                        elif len(board[i][j]) == 2:
+                            ligne_print += f"■■ {board[i][j]}  ■■|"
+                            line_border += '■■     ■■|'
                         else:
                             ligne_print += f"■■ {board[i][j]} ■■|"
                             line_border += '■■     ■■|'
                     elif j%2 == 1:
+                        if len(board[i][j]) == 2:
+                            ligne_print += f"   {board[i][j]}    |"
+                            line_border += '         |'
+                        else:
                             ligne_print += f"   {board[i][j]}   |"
                             line_border += '         |'
                         
@@ -134,12 +159,19 @@ class Board:
                         if board[i][j] == '   ':
                             ligne_print += '■■■■■■■■■|'
                             line_border += '■■■■■■■■■|'
+                        elif len(board[i][j]) == 2:
+                            ligne_print += f"■■ {board[i][j]}  ■■|"
+                            line_border += '■■     ■■|'
                         else:
                             ligne_print += f"■■ {board[i][j]} ■■|"
                             line_border += '■■     ■■|'
                     elif j%2 == 0:
-                        ligne_print += f"   {board[i][j]}   |"
-                        line_border += '         |'
+                        if len(board[i][j]) == 2:
+                            ligne_print += f"   {board[i][j]}    |"
+                            line_border += '         |'
+                        else:
+                            ligne_print += f"   {board[i][j]}   |"
+                            line_border += '         |'
             
             print(line_top_bot)
             print(ligne_up_and_bottom_case)
@@ -151,6 +183,6 @@ class Board:
         print(line_top_bot)
         ligne_col = '  '
         for i in nom_col:
-            ligne_col += f'    {i}    '
+            ligne_col += f'     {i}    '
         print(ligne_col)
         return None

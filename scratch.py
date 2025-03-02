@@ -62,3 +62,5 @@ def display(board):
 
 test = Board.initBoardList()
 display(test)
+
+neuille = '◇'
