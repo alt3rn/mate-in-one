@@ -31,7 +31,7 @@ class Board:
         echiquier = {}
         for colonne in COLUMNS:
             for ligne in range(1, 9):
-                echiquier[f"{colonne}{ligne}"] = '__'
+                echiquier[f"{colonne}{ligne}"] = '   '
         return echiquier
     
 
@@ -46,7 +46,7 @@ class Board:
         for i in range(0, 8):
             ligne = []
             for j in range(0, 8):
-                ligne.append('__')
+                ligne.append('   ')
             echiquier.append(ligne)
         return echiquier
     
@@ -94,7 +94,7 @@ class Board:
         line_next, col_next = Board.convertIndice(next_position)
         board[line_next][col_next] = piece
         line_old, col_old = Board.convertIndice(actual_position)
-        board[line_old][col_old] = '__'
+        board[line_old][col_old] = '   '
         return board
     
 
@@ -108,30 +108,38 @@ class Board:
         """
         num_line = 8
         nom_col = 'abcdefgh'
-        line_top_bot = '  +' + '--------+'*8
+        line_top_bot = '  +' + '---------+'*8
     
         for i in range(len(board)-1, -1, -1):
             ligne_print = f'{i+1} |'
             line_border = '  |'
             if num_line%2 == 0: 
-                ligne_up_and_bottom_case = '  |' + '■■■■■■■■|□□□□□□□□|'*4
+                ligne_up_and_bottom_case = '  |' + '■■■■■■■■■|         |'*4
                 for j in range(len(board[i])):
                     if j%2 == 0:
-                        ligne_print += f"■■ {board[i][j]} ■■|"
-                        line_border += '■■    ■■|'
+                        if board[i][j] == '   ':
+                            ligne_print += '■■■■■■■■■|'
+                            line_border += '■■■■■■■■■|'
+                        else:
+                            ligne_print += f"■■ {board[i][j]} ■■|"
+                            line_border += '■■     ■■|'
                     elif j%2 == 1:
-                        ligne_print += f"□□ {board[i][j]} □□|"
-                        line_border += '□□    □□|'
+                            ligne_print += f"   {board[i][j]}   |"
+                            line_border += '         |'
                         
             elif num_line%2 == 1:
-                ligne_up_and_bottom_case = '  |' + '□□□□□□□□|■■■■■■■■|'*4
+                ligne_up_and_bottom_case = '  |' + '         |■■■■■■■■■|'*4
                 for j in range(len(board[i])):
                     if j%2 == 1:
-                        ligne_print += f"■■ {board[i][j]} ■■|"
-                        line_border += '■■    ■■|'
+                        if board[i][j] == '   ':
+                            ligne_print += '■■■■■■■■■|'
+                            line_border += '■■■■■■■■■|'
+                        else:
+                            ligne_print += f"■■ {board[i][j]} ■■|"
+                            line_border += '■■     ■■|'
                     elif j%2 == 0:
-                        ligne_print += f"□□ {board[i][j]} □□|"
-                        line_border += '□□    □□|'
+                        ligne_print += f"   {board[i][j]}   |"
+                        line_border += '         |'
             
             print(line_top_bot)
             print(ligne_up_and_bottom_case)

@@ -13,11 +13,11 @@ def main():
 
     # Cette partie permet de simuler un coup pion e4 (pour les blancs). Pour un print correct
     # du jeu avec les blancs en bas et le plateau dans le bon sens, il faut parcourir avec un for i in range(.., ..., -1)
-    board_test[1][4] = 'Pw'
+    board_test[1][4] = 'WP1'
     print('Avant le mouvement')
     pprint.pprint(board_test)
     print(f" ----- ")
-    Board.movement(board_test, 'Pw', 'e4') 
+    Board.movement(board_test, 'WP1', 'e4') 
     print('Après le mouvement :')
     pprint.pprint(board_test)
 
