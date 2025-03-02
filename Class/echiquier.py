@@ -17,6 +17,7 @@ CONVERT = {'a': 0,
                7: 'h'
                }
 
+
 class Board:
     def __init__(self, config):
         self.config = config  # Configuration actuelle du plateau (disposition des pions)
