@@ -20,7 +20,6 @@ CONVERT = {'a': 0,
 class Board:
     def __init__(self, config):
         self.config = config  # Configuration actuelle du plateau (disposition des pions)
-        
 
 
     def initBoardDico():
@@ -32,7 +31,7 @@ class Board:
         echiquier = {}
         for colonne in COLUMNS:
             for ligne in range(1, 9):
-                echiquier[f"{colonne}{ligne}"] = '_'
+                echiquier[f"{colonne}{ligne}"] = '__'
         return echiquier
     
 
@@ -47,7 +46,7 @@ class Board:
         for i in range(0, 8):
             ligne = []
             for j in range(0, 8):
-                ligne.append('_')
+                ligne.append('__')
             echiquier.append(ligne)
         return echiquier
     
@@ -55,7 +54,8 @@ class Board:
     def convertIndice(position: str):
         """
         Renvoie les indices utilisables pour les listes construisant le plateau
-        position: str - Position du pion. Ex: 'e4', 'b8'
+        Parameters:
+            position: str - Position du pion. Ex: 'e4', 'b8'
         ---
         return: int, int
         """
@@ -66,10 +66,11 @@ class Board:
     def convertPosition(col: int, line: int):
         """
         La fonction convertIndice() mais en reverse : donne un équivalent d'indices pour une position donnée.
-        col: int - Numéro de la colonne
-        line: int - Numéro de la ligne (-1 par rapport à la ligne réelle comme c'est un indice)
+        Parameters:
+            col: int - Numéro de la colonne
+            line: int - Numéro de la ligne (-1 par rapport à la ligne réelle comme c'est un indice)
         ---
-        return: str - La position équivalente
+        Return: str - La position équivalente
         """
         column = CONVERT[col]
         return f"{column}{line+1}"
@@ -78,11 +79,12 @@ class Board:
     def movement(board: list, piece: str, next_position: str):
         """
         Réalise le mouvement demandé sur le plateau. 
-        board: list - Le plateau sous forme de liste
-        piece: str - Pièce qui bouge
-        next_position: Prochaine position du pion.
-        ---
-        return: list - Plateau avec le mouvement réalisé. L'ancienne position du pion après le mouvement est ainsi vide.
+        Parameters:
+            board: list - Le plateau sous forme de liste
+            piece: str - Pièce qui bouge
+            next_position: str - Prochaine position du pion.
+        
+        Return: list - Plateau avec le mouvement réalisé. L'ancienne position du pion après le mouvement est ainsi vide.
         """
         for i in range(0, 8):
             if piece in board[i]:  # Implique que chaque pièce a un nom UNIQUE
@@ -92,14 +94,55 @@ class Board:
         line_next, col_next = Board.convertIndice(next_position)
         board[line_next][col_next] = piece
         line_old, col_old = Board.convertIndice(actual_position)
-        board[line_old][col_old] = '_'
+        board[line_old][col_old] = '__'
         return board
     
 
     def display(board):
+        """
+        Affiche le plateau actuel dans la console
+        Parameters:
+            board: list[list] - Echiquier sous forme de liste
+        
+        Return: None
+        """
+        num_line = 8
+        nom_col = 'abcdefgh'
+        line_top_bot = '  +' + '--------+'*8
+    
         for i in range(len(board)-1, -1, -1):
-            ligne_print = ''
-            for square in board[i]:
-                ligne_print += f"{square} "
+            ligne_print = f'{i+1} |'
+            line_border = '  |'
+            if num_line%2 == 0: 
+                ligne_up_and_bottom_case = '  |' + '■■■■■■■■|□□□□□□□□|'*4
+                for j in range(len(board[i])):
+                    if j%2 == 0:
+                        ligne_print += f"■■ {board[i][j]} ■■|"
+                        line_border += '■■    ■■|'
+                    elif j%2 == 1:
+                        ligne_print += f"□□ {board[i][j]} □□|"
+                        line_border += '□□    □□|'
+                        
+            elif num_line%2 == 1:
+                ligne_up_and_bottom_case = '  |' + '□□□□□□□□|■■■■■■■■|'*4
+                for j in range(len(board[i])):
+                    if j%2 == 1:
+                        ligne_print += f"■■ {board[i][j]} ■■|"
+                        line_border += '■■    ■■|'
+                    elif j%2 == 0:
+                        ligne_print += f"□□ {board[i][j]} □□|"
+                        line_border += '□□    □□|'
+            
+            print(line_top_bot)
+            print(ligne_up_and_bottom_case)
+            print(line_border)
             print(ligne_print)
+            print(line_border)
+            print(ligne_up_and_bottom_case)
+            num_line -= 1
+        print(line_top_bot)
+        ligne_col = '  '
+        for i in nom_col:
+            ligne_col += f'    {i}    '
+        print(ligne_col)
         return None

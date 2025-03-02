@@ -5,6 +5,5 @@ class Piece:
         self.position = Board
 
     def pion(self):
-        print("Pion") 
-
+        print("Pion")
 
