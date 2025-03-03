@@ -59,14 +59,13 @@ class Board:
         return: list
         """
         board = Board.initBoardList()
-        # J'ai aucune idée de comment optimiser ce truc donc bon, j'ai ff et j'ai fait à l'ancienne
-        # Placement pions blancs
+        # Placement pions
         for i in range(1, 9):
             board[1][i-1] = f'❖P{i}'
             board[6][i-1] = f'◇P{abs(i-9)}'
+        # Placement pièces puissantes
         board[0] = ['❖R1', '❖N1', '❖B1', '❖Q', '❖K', '❖B2', '❖N2', '❖R2']
         board[7] = ['◇R2', '◇N2', '◇B2', '◇Q', '◇K', '◇B1', '◇N1', '◇R1']
-
         return board
     
 

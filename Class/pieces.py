@@ -21,9 +21,10 @@ class Pawn:
     def __init__(self, numero, color):
         self.position = f'{CONVERT[numero-1]}2'
         if color == 'white':
-            self.name = f'❖P{numero}'
+            self.id = f'❖P{numero}'
         elif color == 'black':
-            self.name = f'◇P{numero}'
+            self.id = f'◇P{numero}'
+
     
 
     
